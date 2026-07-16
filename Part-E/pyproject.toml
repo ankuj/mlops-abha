@@ -1,0 +1,13 @@
+[project]
+name = "mlops-part-e-pytest"
+version = "0.1.0"
+description = "Part E — pytest lab for CupGuard"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+  "pytest>=8.0",
+  "pandas>=2.0",
+  "scikit-learn>=1.3.0",
+]
+
+[tool.uv]
+package = false
