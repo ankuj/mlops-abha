@@ -1,0 +1,50 @@
+name: Part-E pytest
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "Part-E/**"
+      - "Part-B/cupguard/**"
+      - ".github/workflows/part-e-pytest.yml"
+  pull_request:
+    paths:
+      - "Part-E/**"
+      - "Part-B/cupguard/**"
+      - ".github/workflows/part-e-pytest.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install Part-E dependencies
+        working-directory: Part-E
+        run: uv sync
+
+      - name: Train Part-B model (if not committed)
+        working-directory: Part-B
+        run: |
+          uv run python -c "
+          import sys
+          sys.path.insert(0, 'cupguard/src')
+          from pipeline import run_lifecycle
+          run_lifecycle()
+          "
+
+      - name: Run pytest
+        working-directory: Part-E
+        run: uv run pytest -v
