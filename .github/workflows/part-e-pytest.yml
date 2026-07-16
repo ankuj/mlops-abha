@@ -2,7 +2,7 @@ name: Part-E pytest
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, pytest-workflow]
     paths:
       - "Part-E/**"
       - "Part-B/cupguard/**"
