@@ -35,16 +35,6 @@ jobs:
         working-directory: Part-E
         run: uv sync
 
-      - name: Train Part-B model (if not committed)
-        working-directory: Part-B
-        run: |
-          uv run python -c "
-          import sys
-          sys.path.insert(0, 'cupguard/src')
-          from pipeline import run_lifecycle
-          run_lifecycle()
-          "
-
       - name: Run pytest
         working-directory: Part-E
         run: uv run pytest -v
